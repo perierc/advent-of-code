@@ -12,6 +12,16 @@ const SPELLED_OUT_NUMBER_TO_DIGIT: Record<string, string> = {
   nine: '9',
 };
 
+function getCalibrationValue1(line: string): number {
+  const firstDigit = line.match(/\d/)?.[0];
+  const lastDigit = line.match(/\d(?!.*\d)/)?.[0];
+  if (firstDigit && lastDigit) {
+    return parseInt(firstDigit + lastDigit);
+  } else {
+    return 0;
+  }
+}
+
 function convertLettersToDigits(line: string): string {
   let result = '';
   for (let i = 0; i < line.length; i++) {
@@ -26,7 +36,7 @@ function convertLettersToDigits(line: string): string {
   return result;
 }
 
-function getCalibrationValue(line: string): number {
+function getCalibrationValue2(line: string): number {
   const digits = convertLettersToDigits(line);
   if (digits.length) {
     return parseInt(digits[0] + digits[digits.length - 1]);
@@ -35,16 +45,16 @@ function getCalibrationValue(line: string): number {
   }
 }
 
-let sum = 0;
+const input: string = fs.readFileSync('./input.txt', 'utf8');
+const lines: string[] = input.split('\n');
 
-fs.readFile('input.txt', 'utf-8', (err, data) => {
-  if (err) {
-    console.error(err);
-  } else {
-    const lines = data.split('\n');
-    for (const line of lines) {
-      sum += getCalibrationValue(line);
-    }
-    console.log('The sum of all calibration values is ' + sum + '.');
-  }
-});
+let sum1 = 0;
+let sum2 = 0;
+
+for (const line of lines) {
+  sum1 += getCalibrationValue1(line);
+  sum2 += getCalibrationValue2(line);
+}
+
+console.log('Part 1:', sum1);
+console.log('Part 2:', sum2);
