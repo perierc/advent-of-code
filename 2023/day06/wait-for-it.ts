@@ -1,24 +1,23 @@
 import * as fs from 'fs';
-import { join } from 'path';
 
 const input: string = fs.readFileSync('./input.txt', 'utf8');
 const lines: string[] = input.split('\n');
 
-const times: number[] = lines[0]
-  .split(':')[1]
-  .trim()
-  .split(' ')
-  .filter((t) => t !== '')
-  .map((t) => parseInt(t));
-const distances: number[] = lines[1]
-  .split(':')[1]
-  .trim()
-  .split(' ')
-  .filter((d) => d !== '')
-  .map((d) => parseInt(d));
-
 const findProductOfNumberOfWaysPart1 = (): number => {
   let productOfNumberOfWays: number = 1;
+
+  const times: number[] = lines[0]
+    .split(':')[1]
+    .trim()
+    .split(' ')
+    .filter((t) => t !== '')
+    .map((t) => parseInt(t));
+  const distances: number[] = lines[1]
+    .split(':')[1]
+    .trim()
+    .split(' ')
+    .filter((d) => d !== '')
+    .map((d) => parseInt(d));
 
   for (let i = 0; i < times.length; i++) {
     let numberOfWays: number = 0;
@@ -37,14 +36,12 @@ const findProductOfNumberOfWaysPart1 = (): number => {
 const findNumberOfWaysPart2 = (): number => {
   let numberOfWays: number = 0;
 
-  let timeStr: string = '';
-  let distanceStr: string = '';
-  for (let i = 0; i < times.length; i++) {
-    timeStr += times[i];
-    distanceStr += distances[i];
-  }
-  const time: number = parseInt(timeStr);
-  const distance: number = parseInt(distanceStr);
+  const time: number = parseInt(
+    lines[0].split(':')[1].trim().split(' ').join('')
+  );
+  const distance: number = parseInt(
+    lines[1].split(':')[1].trim().split(' ').join('')
+  );
 
   for (let holdingTime = 1; holdingTime < time; holdingTime++) {
     const distanceReached: number = holdingTime * (time - holdingTime);
