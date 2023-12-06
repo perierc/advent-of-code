@@ -47,7 +47,7 @@ const findNumberOfWaysPart2 = (): number => {
     const distanceReached: number = holdingTime * (time - holdingTime);
     if (distanceReached > distance) {
       numberOfWays++;
-    } else if (distanceReached < distance && numberOfWays > 0) {
+    } else if (distanceReached <= distance && numberOfWays > 0) {
       break;
     }
   }
